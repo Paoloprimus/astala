@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCurrentUserId } from '@/lib/auth';
-import { generateAI } from '@/lib/ai/openaiClient';
-import { logAI } from '@/lib/ai/aiLogger';
+import { getCurrentUserId } from '../../../../lib/auth';
+import { generateAI } from '../../../../lib/ai/openaiClient';
+import { logAI } from '../../../../lib/ai/aiLogger';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
