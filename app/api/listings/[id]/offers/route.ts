@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../../../lib/db';
 
-export async function GET(_: NextRequest, ctx: { params: { id: string } }) {
-  const { id } = ctx.params;
+export async function GET(
+  _: NextRequest, 
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   const { data, error } = await supabase
     .from('offers')
     .select('*')
