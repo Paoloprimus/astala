@@ -1,14 +1,20 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function ListingDetail({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default function ListingDetail({ params }: { params: Promise<{ id: string }> }) {
+  const [id, setId] = useState<string>('');
   const [listing, setListing] = useState<any>(null);
   const [offers, setOffers] = useState<any[]>([]);
   const [amount, setAmount] = useState<number>(0);
   const [message, setMessage] = useState('');
 
+  // Unwrap params Promise in Client Component
   useEffect(() => {
+    params.then(p => setId(p.id));
+  }, [params]);
+
+  useEffect(() => {
+    if (!id) return;
     fetch('/api/listings').then(r=>r.json()).then(j=>{
       const l = (j.data||[]).find((x:any)=>x.id===id); setListing(l);
     });
@@ -33,7 +39,7 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
       <p className="opacity-80">{listing.description}</p>
 
       <section className="border-t pt-3">
-        <h2 className="font-semibold mb-2">Fai un’offerta</h2>
+        <h2 className="font-semibold mb-2">Fai un'offerta</h2>
         <input className="border p-2 mr-2" type="number" value={amount} onChange={e=>setAmount(parseInt(e.target.value||'0'))} />
         <button className="px-2 py-2 border rounded mr-2" onClick={aiMsg}>🪄 Messaggio AI</button>
         <textarea className="border p-2 w-full mt-2" value={message} onChange={e=>setMessage(e.target.value)} />
