@@ -7,7 +7,6 @@ export default function Home() {
   return (
     <main className="max-w-3xl mx-auto p-4 space-y-4">
       <h1 className="text-2xl font-bold">ASTEZEROCOSTI</h1>
-<h2 className="text-2xl>aste immobiliari private volontarie free"</h2>
       <a className="inline-block px-4 py-2 bg-black text-white rounded" href="/new">+ Crea annuncio</a>
       <div className="space-y-3">
         {listings.map(l => (
